@@ -1,8 +1,10 @@
 package me.approximations.mostWanted.listener;
 
 import me.approximations.mostWanted.Main;
+import me.approximations.mostWanted.configuration.Messages;
 import me.approximations.mostWanted.dao.UserDao;
 import me.approximations.mostWanted.model.User;
+import me.approximations.mostWanted.util.NumberUtils;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
@@ -29,9 +31,14 @@ public class PlayerListeners implements Listener {
         if(killer == null || killer.getType() != EntityType.PLAYER) return;
 
         User user = userDao.getUsers().get(p.getName());
+        if(!user.isInContract()) return;
         EconomyResponse response = econ.depositPlayer(killer, user.getHeadPrice());
-        user.setHeadPrice(0);
 
-        killer.sendMessage("§aYou");
+        killer.sendMessage(Messages.KILLED
+                .replace("{player}", p.getName())
+                .replace("{value}", NumberUtils.format(user.getHeadPrice()))
+        );
+
+        user.setHeadPrice(0);
     }
 }

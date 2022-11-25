@@ -12,6 +12,6 @@ public class WantedManager {
     private final UserDao userDao;
 
     public List<User> getWantedUsers() {
-        return userDao.getUsers().values().stream().filter(user -> user.getHeadPrice() > 0).collect(Collectors.toList());
+        return userDao.getUsers().values().stream().filter(User::isInContract).collect(Collectors.toList());
     }
 }

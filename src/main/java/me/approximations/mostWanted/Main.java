@@ -3,11 +3,13 @@ package me.approximations.mostWanted;
 import com.jaoow.sql.executor.SQLExecutor;
 import lombok.Getter;
 import me.approximations.mostWanted.command.WantedCommand;
+import me.approximations.mostWanted.configuration.Messages;
 import me.approximations.mostWanted.dao.SQLProvider;
 import me.approximations.mostWanted.dao.UserDao;
 import me.approximations.mostWanted.dao.adapter.UserAdapter;
 import me.approximations.mostWanted.dao.repository.UserRepository;
 import me.approximations.mostWanted.dao.scheduler.AutoSave;
+import me.approximations.mostWanted.listener.PlayerListeners;
 import me.approximations.mostWanted.manager.WantedManager;
 import me.approximations.mostWanted.model.User;
 import me.approximations.mostWanted.util.ConfigReader;
@@ -38,6 +40,7 @@ public class Main extends JavaPlugin {
         saveDefaultConfig();
         messagesConfig = new ConfigReader(this, "", "messages.yml");
         messagesConfig.saveDefaultConfig();
+        Messages.init(this);
     }
 
     @Override
@@ -49,9 +52,15 @@ public class Main extends JavaPlugin {
         }
         instance = this;
         setupDatabase();
-        setupView();
         setupCommand();
         wantedManager = new WantedManager(userDao);
+        setupView();
+        setupListener();
+    }
+
+    @Override
+    public void onDisable() {
+        userDao.saveAll();
     }
 
     private void setupDatabase() {
@@ -87,6 +96,10 @@ public class Main extends JavaPlugin {
 
     private void setupCommand() {
         bukkitFrame = new BukkitFrame(this);
-        bukkitFrame.registerCommands(new WantedCommand(this));
+        bukkitFrame.registerCommands(new WantedCommand(this, econ, userDao, userRepository));
+    }
+
+    private void setupListener() {
+        PlayerListeners playerListeners = new PlayerListeners(this);
     }
 }

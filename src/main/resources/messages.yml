@@ -1,2 +1,12 @@
 invalid-player: "&cThis player does not exists."
 invalid-price: "&cInvalid price!"
+not-enough-money: "&cYou do not have enough money."
+contract-success: "&aYou put ${price} on {player}'s head."
+killed: "&aYou killed {player}, who was on a death contract, you won ${value}."
+already-in-contract: "&c{player} is already has a contract."
+price-below-minimum: "&cThe minimum price is {minimumPrice}."
+
+list-of-commands: |-
+  &cContract Commands:
+  &c /contracts - See a list of players with a price on their head.
+  &c /contract <player> <price> - Put a price on a player head.

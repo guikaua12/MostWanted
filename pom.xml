@@ -31,11 +31,19 @@
                             <relocations>
                                 <relocation>
                                     <pattern>com.jaoow.sql</pattern>
-                                    <shadedPattern>me.approximations.mostWanted.lib</shadedPattern>
+                                    <shadedPattern>me.approximations.mostWanted.lib.com.jaoow.sql</shadedPattern>
                                 </relocation>
                                 <relocation>
                                     <pattern>me.saiintbrisson.minecraft</pattern>
-                                    <shadedPattern>me.approximations.mostWanted.lib</shadedPattern>
+                                    <shadedPattern>me.approximations.mostWanted.lib.me.saiintbrisson.minecraft</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>me.saiintbrisson.bukkit.command</pattern>
+                                    <shadedPattern>me.approximations.mostWanted.lib.me.saiintbrisson.bukkit.command</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.zaxxer.hikari</pattern>
+                                    <shadedPattern>me.approximations.mostWanted.lib.com.zaxxer.hikari</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>

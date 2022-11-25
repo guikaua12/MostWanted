@@ -7,3 +7,6 @@ database:
   password: ''
   table: 'mostWanted'
 
+general:
+  # Minimum price for /contract <player> <price>
+  minimum-price: 1000
