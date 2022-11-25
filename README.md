@@ -4,4 +4,4 @@ MostWanted is a assassin contract plugin, you can put a price on a player's head
 
 Showcase video:
 
-[![MostWanted showcase video](https://img.youtube.com/vi/i3dDs6hqPcw/0.jpg)](https://www.youtube.com/watch?v=i3dDs6hqPcw)
+[Click me](https://www.youtube.com/watch?v=i3dDs6hqPcw)
