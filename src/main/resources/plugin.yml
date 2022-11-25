@@ -1,0 +1,5 @@
+name: MostWanted
+main: me.approximations.mostWanted.Main
+version: 1.0.0
+author: Approximations
+depend: [Vault]

@@ -1,9 +1,9 @@
-package me.approximations.parkourPlugin.dao;
+package me.approximations.mostWanted.dao;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import me.approximations.parkourPlugin.dao.repository.UserRepository;
-import me.approximations.parkourPlugin.model.User;
+import me.approximations.mostWanted.dao.repository.UserRepository;
+import me.approximations.mostWanted.model.User;
 import org.bukkit.plugin.Plugin;
 
 import java.util.LinkedHashMap;
@@ -16,9 +16,9 @@ public class UserDao {
     private final UserRepository userRepository;
     private final Plugin plugin;
     @Getter
-    private final Map<UUID, User> users = new LinkedHashMap<>();
+    private final Map<String, User> users = new LinkedHashMap<>();
     public void insertOrUpdate(User user) {
-        if(contains(user.getUuid())) {
+        if(contains(user.getName())) {
             update(user);
         }else {
             insert(user);
@@ -26,19 +26,19 @@ public class UserDao {
     }
 
     public void insert(User user) {
-        users.put(user.getUuid(), user);
+        users.put(user.getName(), user);
     }
 
     public void update(User user) {
-        users.replace(user.getUuid(), user);
+        users.replace(user.getName(), user);
     }
 
-    public void remove(UUID uuid) {
-        users.remove(uuid);
+    public void remove(String name) {
+        users.remove(name);
     }
 
-    public boolean contains(UUID uuid) {
-        return users.containsKey(uuid);
+    public boolean contains(String name) {
+        return users.containsKey(name);
     }
 
     public void getAll() {
@@ -54,6 +54,6 @@ public class UserDao {
     }
 
     public void saveOne(User user) {
-        userRepository.insertOrUpdate(user);
+        userRepository.update(user);
     }
 }

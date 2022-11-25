@@ -1,7 +1,7 @@
-package me.approximations.parkourPlugin.dao.scheduler;
+package me.approximations.mostWanted.dao.scheduler;
 
-import me.approximations.parkourPlugin.Main;
-import me.approximations.parkourPlugin.dao.UserDao;
+import me.approximations.mostWanted.Main;
+import me.approximations.mostWanted.dao.UserDao;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class AutoSave extends BukkitRunnable {

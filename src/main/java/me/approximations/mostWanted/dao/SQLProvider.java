@@ -1,10 +1,10 @@
-package me.approximations.parkourPlugin.dao;
+package me.approximations.mostWanted.dao;
 
 import com.jaoow.sql.connector.type.impl.MySQLDatabaseType;
 import com.jaoow.sql.connector.type.impl.SQLiteDatabaseType;
 import com.jaoow.sql.executor.SQLExecutor;
-import me.approximations.parkourPlugin.Main;
-import me.approximations.parkourPlugin.dao.listener.JoinLeaveEvent;
+import me.approximations.mostWanted.Main;
+import me.approximations.mostWanted.dao.listener.JoinLeaveEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 

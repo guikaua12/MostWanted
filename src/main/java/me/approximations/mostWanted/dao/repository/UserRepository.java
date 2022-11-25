@@ -1,13 +1,15 @@
-package me.approximations.parkourPlugin.dao.repository;
+package me.approximations.mostWanted.dao.repository;
 
 import com.jaoow.sql.executor.SQLExecutor;
-import me.approximations.parkourPlugin.Main;
-import me.approximations.parkourPlugin.model.User;
+import com.jaoow.sql.executor.batch.BatchBuilder;
+import me.approximations.mostWanted.Main;
+import me.approximations.mostWanted.model.User;
+import org.bukkit.event.player.PlayerFishEvent;
 
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.CompletableFuture;
 
 public class UserRepository{
     private final Main plugin;
@@ -23,11 +25,12 @@ public class UserRepository{
 
 
     public void createTable() {
-        sqlExecutor.execute("CREATE TABLE IF NOT EXISTS "+TABLE+"(uuid VARCHAR(72) PRIMARY KEY, bestTime BIGINT);");
+        sqlExecutor.executeAsync("CREATE TABLE IF NOT EXISTS "+TABLE+"(name VARCHAR(35) PRIMARY KEY NOT NULL, headPrice DOUBLE);");
     }
 
     public void insertOrUpdate(User user) {
-        if(contains(user.getUuid())) {
+        User user1 = get(user.getName());
+        if(user1 != null) {
             update(user);
         }else {
             insert(user);
@@ -37,8 +40,8 @@ public class UserRepository{
     public void insert(User user) {
         sqlExecutor.execute("INSERT INTO "+TABLE+" VALUES(?, ?);", c -> {
             try {
-                c.setString(1, user.getUuid().toString());
-                c.setLong(2, user.getBestTime());
+                c.setString(1, user.getName());
+                c.setDouble(2, user.getHeadPrice());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -46,34 +49,35 @@ public class UserRepository{
     }
 
     public void update(User user) {
-        sqlExecutor.execute("UPDATE "+TABLE+" SET bestTime = ? WHERE uuid = ?;", c -> {
+        sqlExecutor.executeAsync("UPDATE "+TABLE+" SET headPrice = ? WHERE name = ?;", c -> {
             try {
-                c.setLong(1, user.getBestTime());
-                c.setString(2, user.getUuid().toString());
+                c.setDouble(1, user.getHeadPrice());
+                c.setString(2, user.getName());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         });
+
     }
 
-    public User get(UUID uuid) {
-        return sqlExecutor.query("SELECT * FROM "+TABLE+" WHERE uuid = ?;", c -> {
+    public User get(String name) {
+        return sqlExecutor.query("SELECT * FROM "+TABLE+" WHERE name = ?;", c -> {
             try {
-                c.setString(1, uuid.toString());
+                c.setString(1, name);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }, User.class).orElse(null);
     }
 
-    public boolean contains(UUID uuid) {
-        return get(uuid) != null;
+    public boolean contains(String name) {
+        return get(name) != null;
     }
 
-    public void delete(UUID uuid) {
-        sqlExecutor.execute("DELETE FROM "+TABLE+" WHERE uuid = ?;", c -> {
+    public void delete(String name) {
+        sqlExecutor.execute("DELETE FROM "+TABLE+" WHERE name = ?;", c -> {
             try {
-                c.setString(1, uuid.toString());
+                c.setString(1, name);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -84,7 +88,7 @@ public class UserRepository{
         return sqlExecutor.queryMany("SELECT * FROM "+TABLE+";", User.class);
     }
 
-    public Set<User> getTop5() {
-        return sqlExecutor.queryMany("SELECT * FROM "+TABLE+" WHERE NOT bestTime = -1 ORDER BY bestTime ASC LIMIT 5;", User.class);
+    public Set<User> getTop10() {
+        return sqlExecutor.queryMany("SELECT * FROM "+TABLE+" ORDER BY headPrice DESC LIMIT 10;", User.class);
     }
 }

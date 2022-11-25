@@ -1,9 +1,9 @@
-package me.approximations.parkourPlugin.dao.listener;
+package me.approximations.mostWanted.dao.listener;
 
-import me.approximations.parkourPlugin.Main;
-import me.approximations.parkourPlugin.dao.UserDao;
-import me.approximations.parkourPlugin.dao.repository.UserRepository;
-import me.approximations.parkourPlugin.model.User;
+import me.approximations.mostWanted.Main;
+import me.approximations.mostWanted.dao.UserDao;
+import me.approximations.mostWanted.dao.repository.UserRepository;
+import me.approximations.mostWanted.model.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,9 +19,9 @@ public class JoinLeaveEvent implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
         Bukkit.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-            User user = userRepository.get(p.getUniqueId());
+            User user = userRepository.get(p.getName());
             if(user == null) {
-                userDao.insert(new User(p.getUniqueId(), -1));
+                userDao.insert(new User(p.getName(), 0));
                 return;
             }
             userDao.insert(user);
@@ -32,9 +32,9 @@ public class JoinLeaveEvent implements Listener {
     public void onQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         Bukkit.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-            User user = userDao.getUsers().get(p.getUniqueId());
+            User user = userDao.getUsers().get(p.getName());
             userRepository.insertOrUpdate(user);
-            userDao.remove(p.getUniqueId());
+            userDao.remove(p.getName());
         });
     }
 }
