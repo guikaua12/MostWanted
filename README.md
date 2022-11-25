@@ -5,3 +5,7 @@ MostWanted is a assassin contract plugin, you can put a price on a player's head
 Showcase video:
 
 [Click me](https://www.youtube.com/watch?v=i3dDs6hqPcw)
+
+Plugin depends on:
+ - Vault
+ - Any economy plugin
