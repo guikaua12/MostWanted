@@ -4,9 +4,7 @@ MostWanted is a assassin contract plugin, you can put a price on a player's head
 
 Tested on 1.8.8, but should work on 1.8~1.18.2
 
-Showcase video:
-
-[Click me](https://www.youtube.com/watch?v=i3dDs6hqPcw)
+Showcase video: [Click me](https://www.youtube.com/watch?v=i3dDs6hqPcw)
 
 Commands:
 Command|Description|
